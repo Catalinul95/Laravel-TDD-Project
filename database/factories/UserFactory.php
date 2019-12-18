@@ -25,3 +25,27 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+
+$factory->define(\App\Category::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+    ];
+});
+
+
+$factory->define(\App\Course::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return (factory(User::class)->create())->id;
+        },
+        'category_id' => function () {
+            return (factory(\App\Category::class)->create())->id;
+        },
+        'name' => $faker->name,
+        'short_description' => $faker->paragraph,
+        'description' => $faker->text,
+        'seats' => random_int(3, 20),
+        'expiry_date' => $faker->dateTimeBetween('+0 days', '+5 months')
+    ];
+});
