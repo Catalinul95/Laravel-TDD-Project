@@ -29,7 +29,8 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(\App\Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $name = $faker->name,
+        'slug' => Str::slug($name),
     ];
 });
 
