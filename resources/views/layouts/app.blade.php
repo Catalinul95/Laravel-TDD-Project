@@ -39,7 +39,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @foreach ($categories as $category)
-                                    <a href="{{ $category->slug }}" class="dropdown-item">{{ $category->name }}</a>
+                                    <a href="{{ route('categories-courses.index', ['category' => $category->slug]) }}" class="dropdown-item">{{ $category->name }}</a>
                                 @endforeach
                             </div>
                         </li>

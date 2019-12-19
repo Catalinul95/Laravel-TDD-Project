@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/courses', 'CoursesController@index')->name('courses.index');
 Route::get('/courses/{course}', 'CoursesController@show')->name('courses.show');
+Route::get('/categories/courses/{category}', 'CategoriesCoursesController@index')->name('categories-courses.index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
