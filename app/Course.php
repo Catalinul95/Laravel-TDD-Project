@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $dates = ['expiry_date'];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

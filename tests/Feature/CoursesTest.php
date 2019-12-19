@@ -28,7 +28,7 @@ class CoursesTest extends TestCase
 
         $course = factory(Course::class)->create();
 
-        $response = $this->get('/courses/' . $course->id);
+        $response = $this->get('/courses/' . $course->slug);
 
         $response->assertStatus(200)
             ->assertSee($course->expiry_date->diffForHumans())

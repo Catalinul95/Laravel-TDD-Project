@@ -18,6 +18,7 @@ class CreateCoursesTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('category_id');
             $table->string('name');
+            $table->string('slug');
             $table->text('short_description');
             $table->longText('description');
             $table->unsignedInteger('seats');

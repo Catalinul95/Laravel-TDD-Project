@@ -42,7 +42,8 @@ $factory->define(\App\Course::class, function (Faker $faker) {
         'category_id' => function () {
             return (factory(\App\Category::class)->create())->id;
         },
-        'name' => $faker->name,
+        'name' => $name = $faker->name,
+        'slug' => Str::slug($name),
         'short_description' => $faker->paragraph,
         'description' => $faker->text,
         'seats' => random_int(3, 20),

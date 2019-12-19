@@ -11,7 +11,7 @@
                        @foreach ($courses as $course)
                            <div class="row">
                                <div class="col-md-12">
-                                   <h2><a href="{{ route('courses.show', ['course' => $course->id]) }}">{{ $course->name }}</a></h2>
+                                   <h2><a href="{{ route('courses.show', ['course' => $course->slug]) }}">{{ $course->name }}</a></h2>
                                    <p>{{ $course->short_description }}</p>
                                    <hr>
                                </div>
