@@ -31,6 +31,7 @@ class CoursesTest extends TestCase
         $response = $this->get('/courses/' . $course->id);
 
         $response->assertStatus(200)
+            ->assertSee($course->expiry_date->diffForHumans())
             ->assertSee($course->name)
             ->assertSee($course->description);
     }
