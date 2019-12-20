@@ -59,7 +59,7 @@ class CoursesTest extends TestCase
         $user = factory(User::class)->create();
 
         $course = factory(Course::class)->make()->toArray();
-        unset($course['user_id']);
+        $course['expiry_date'] = date('Y-m-d',strtotime($course['expiry_date']));
 
         $response = $this->actingAs($user)->post('/courses', $course);
 
