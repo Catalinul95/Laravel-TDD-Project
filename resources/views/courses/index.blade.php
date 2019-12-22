@@ -13,6 +13,7 @@
                                <div class="col-md-12">
                                    <h2><a href="{{ route('courses.show', ['course' => $course->slug]) }}">{{ $course->name }}</a></h2>
                                    <p>{{ $course->short_description }}</p>
+                                   <p>Expires <span class="badge badge-info">{{ $course->expiry_date->diffForHumans() }}</span></p>
                                    <hr>
                                </div>
                            </div>
