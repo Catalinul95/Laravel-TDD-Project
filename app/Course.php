@@ -13,4 +13,14 @@ class Course extends Model
     {
         return 'slug';
     }
+
+    public function user()
+    {
+    	return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function hasOwner($id)
+    {
+    	return $this->user->id == $id;
+    }
 }
