@@ -63,9 +63,18 @@ class CoursesTest extends TestCase
 
         $response = $this->actingAs($user)->post('/courses', $course);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302)
+            ->assertRedirect('/courses/create');
 
         $this->assertEquals($course['name'], (Course::first())->name);
+    }
+
+    /** @test */
+    public function only_authenticated_users_can_view_page_to_create_course()
+    {
+        $this->get('/courses/create')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
     }
 
     /** @test */

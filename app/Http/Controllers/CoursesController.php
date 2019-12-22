@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Http\Requests\StoreCourseRequest;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Requests\StoreCourseRequest;
 
 class CoursesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth')->only(['create', 'store']);
     }
 
     public function index()
@@ -26,6 +27,13 @@ class CoursesController extends Controller
         return view('courses.show', compact('course'));
     }
 
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('courses.create', compact('categories'));
+    }
+
     public function store(StoreCourseRequest $request)
     {
         Course::create([
@@ -38,5 +46,7 @@ class CoursesController extends Controller
             'seats' => $request->seats,
             'expiry_date' => $request->expiry_date,
         ]);
+
+        return redirect('/courses/create')->with('message', 'Your course has been created.');
     }
 }
