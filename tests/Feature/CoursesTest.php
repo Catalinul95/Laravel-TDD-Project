@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Category;
 use App\Course;
 use App\User;
+use App\CourseRegistration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -229,5 +230,104 @@ class CoursesTest extends TestCase
 
         $response->assertStatus(302)
             ->assertSessionHasErrors(['expiry_date']);
+    }
+
+    /** @test */
+    public function user_can_send_course_registration_request()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $response = $this->actingAs($user)->post('/courses/registrations/' . $course->id);
+
+        $this->assertDatabaseHas('course_registrations', [
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+        ]);
+
+        $response->assertStatus(302)
+            ->assertSessionHas(['message']);
+    }
+
+    /** @test */
+    public function only_authenticated_user_can_send_course_registration_requests()
+    {
+        $response = $this->post('/courses/registrations/3');
+
+        $response->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function can_send_course_registration_requests_only_to_valid_course()
+    {
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $response = $this->actingAs($user)->post('/courses/registrations/32');
+
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function cant_send_more_than_one_course_registration_request()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+        $courseRegistrationReq = factory(CourseRegistration::class)->create(['user_id' => $user->id, 'course_id' => $course->id]);
+
+        $response = $this->actingAs($user)->post('/courses/registrations/' . $course->id);
+
+        $response->assertStatus(302)
+            ->assertSessionHas(['error' => 'You have already sent one request to register to this course.']);
+    }
+
+    /** @test */
+    public function cant_send_registration_requests_when_no_more_seats()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create(['seats' => 1]);
+        $courseRegistrationReq = factory(CourseRegistration::class)->create(['course_id' => $course->id]);
+
+        $response = $this->actingAs($user)->post('/courses/registrations/' . $course->id);
+
+        $response->assertStatus(302)
+            ->assertSessionHas(['error' => 'There are no more seats available.']);
+    }
+
+    /** @test */
+    public function course_owner_cant_send_registration_request_to_his_own_course()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create(['user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->post('/courses/registrations/' . $course->id);
+
+        $response->assertStatus(302)
+            ->assertSessionHas(['error' => 'You can not register to your own course.']);
+    }
+
+    /** @test */
+    public function cant_send_registration_request_when_course_expired()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create(['expiry_date' => '2018-01-01']);
+
+        $response = $this->actingAs($user)->post('/courses/registrations/' . $course->id);
+
+        $response->assertStatus(302)
+            ->assertSessionHas(['error' => 'This course has expired.']);
     }
 }

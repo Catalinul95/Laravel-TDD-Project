@@ -5,7 +5,16 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">View Course</div>
+                    <div class="card-header">
+                        @if ((auth()->check() && $course->hasOwner(auth()->user()->id)))
+                            View Course
+                        @else
+                            <form action="" method="POST">
+                                {{ csrf_field() }}
+                                <button class="btn btn-info">Register To Course</button>
+                            </form>
+                        @endif
+                    </div>
 
                     <div class="card-body">
                         <h2>{{ $course->name }}</h2>

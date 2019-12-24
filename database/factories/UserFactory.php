@@ -51,3 +51,17 @@ $factory->define(\App\Course::class, function (Faker $faker) {
         'expiry_date' => $faker->dateTimeBetween('+0 days', '+5 months'),
     ];
 });
+
+
+
+$factory->define(\App\CourseRegistration::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return (factory(User::class)->create())->id;
+        },
+        'course_id' => function () {
+            return (factory(\App\Course::class)->create())->id;
+        },
+    ];
+});
+
