@@ -32,7 +32,7 @@ class CourseTest extends TestCase
     {
     	// check with a user that it's not the owner of the course
     	$course = factory(Course::class)->create();
-    	$this->assertFalse($course->ownedBy(3));
+    	$this->assertFalse($course->hasOwner(3));
 
     	$user = factory(User::class)->create();
     	$course2 = factory(Course::class)->create(['user_id' => $user->id]);

@@ -48,6 +48,6 @@ $factory->define(\App\Course::class, function (Faker $faker) {
         'short_description' => $faker->paragraph,
         'description' => $faker->text,
         'seats' => random_int(3, 20),
-        'expiry_date' => $faker->dateTimeBetween('+0 days', '+5 months')
+        'expiry_date' => $faker->dateTimeBetween('+0 days', '+5 months'),
     ];
 });
