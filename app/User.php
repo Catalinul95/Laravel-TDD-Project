@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function courseRegistration()
+    {
+        return $this->hasMany(courseRegistration::class, 'user_id', 'id');
+    }
+
+    public function hasCourseRegistrationRequest($courseId)
+    {
+        return (bool) $this->courseRegistration()->where('course_id', $courseId)->count();
+    }
+
+    public function getCourseRegistrationStatus($courseId)
+    {
+        return ($this->courseRegistration()->where('course_id', $courseId)->first())->status;
+    }
 }

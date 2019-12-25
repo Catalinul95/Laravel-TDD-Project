@@ -15,12 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/courses/registrations/{course}', 'CourseRegistrations@store')->name('course-registrations.store');
 Route::get('/courses/create', 'CoursesController@create')->name('courses.create');
 Route::get('/courses', 'CoursesController@index')->name('courses.index');
 Route::post('/courses', 'CoursesController@store')->name('courses.store');
 Route::get('/courses/{course}', 'CoursesController@show')->name('courses.show');
 Route::get('/categories/courses/{category}', 'CategoriesCoursesController@index')->name('categories-courses.index');
-Route::post('/courses/registrations/{course}', 'CourseRegistrations@store')->name('course-registrations.store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
