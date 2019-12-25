@@ -330,4 +330,31 @@ class CoursesTest extends TestCase
         $response->assertStatus(302)
             ->assertSessionHas(['error' => 'This course has expired.']);
     }
+
+    /** @test */
+    public function teacher_can_view_his_courses()
+    {
+        //$this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $courses = factory(Course::class, 10)->create(['user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get('/teacher-courses');
+
+        $response->assertStatus(200)
+            ->assertSee($user->courses()->first()->id)
+            ->assertSee($user->courses()->first()->name);
+    }
+
+    /** @test */
+    public function an_authenticated_teacher_can_view_his_courses()
+    {
+        $user = factory(User::class)->create();
+        $courses = factory(Course::class, 10)->create(['user_id' => $user->id]);
+
+        $response = $this->get('/teacher-courses');
+
+        $response->assertStatus(302)
+            ->assertRedirect('/login');
+    }
 }

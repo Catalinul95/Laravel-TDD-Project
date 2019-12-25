@@ -21,6 +21,7 @@ Route::get('/courses', 'CoursesController@index')->name('courses.index');
 Route::post('/courses', 'CoursesController@store')->name('courses.store');
 Route::get('/courses/{course}', 'CoursesController@show')->name('courses.show');
 Route::get('/categories/courses/{category}', 'CategoriesCoursesController@index')->name('categories-courses.index');
+Route::get('/teacher-courses', 'TeacherCoursesController@index')->name('teacher-courses.index');
 
 Auth::routes();
 

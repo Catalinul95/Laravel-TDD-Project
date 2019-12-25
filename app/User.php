@@ -37,6 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'user_id', 'id');
+    }
+
     public function courseRegistration()
     {
         return $this->hasMany(courseRegistration::class, 'user_id', 'id');
