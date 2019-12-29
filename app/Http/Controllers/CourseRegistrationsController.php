@@ -58,4 +58,18 @@ class CourseRegistrationsController extends Controller
 
     	return back()->with('message', 'Your registration request has been sent.');
     }
+
+    public function update(Request $request, $courseRegistrationId)
+    {
+        $courseRegistration = CourseRegistration::findOrFail($courseRegistrationId);
+
+        if ($courseRegistration->course->user->id != auth()->user()->id) {
+            return redirect('/');
+        }
+
+        $courseRegistration->status = $request->status;
+        $courseRegistration->save();
+
+        return back();
+    }
 }

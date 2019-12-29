@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/courses/registrations/{course}', 'CourseRegistrationsController@index')->name('course-registrations.index');
 Route::post('/courses/registrations/{course}', 'CourseRegistrationsController@store')->name('course-registrations.store');
+Route::patch('/courses/registrations/update/{courseRegistrationId}', 'CourseRegistrationsController@update')->name('course-registrations.update');
 Route::get('/courses/create', 'CoursesController@create')->name('courses.create');
 Route::get('/courses', 'CoursesController@index')->name('courses.index');
 Route::post('/courses', 'CoursesController@store')->name('courses.store');
