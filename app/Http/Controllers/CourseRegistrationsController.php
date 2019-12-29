@@ -6,12 +6,25 @@ use App\Course;
 use App\CourseRegistration;
 use Illuminate\Http\Request;
 
-class CourseRegistrations extends Controller
+class CourseRegistrationsController extends Controller
 {
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
+
+	public function index($courseId)
+    {
+        $course = auth()->user()->courses()->where('id', $courseId)->first();
+
+        if (!$course) {
+            abort(404);
+        }
+
+        $registrations = $course->registrations;
+
+        return view('teacher.registrations.index', compact('registrations'));
+    }
 
     public function store(Request $request, $courseId)
     {

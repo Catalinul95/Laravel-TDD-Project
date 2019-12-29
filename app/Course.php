@@ -23,4 +23,9 @@ class Course extends Model
     {
     	return $this->user->id == $id;
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(CourseRegistration::class, 'course_id', 'id');
+    }
 }
