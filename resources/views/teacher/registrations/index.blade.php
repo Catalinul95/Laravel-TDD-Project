@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Dashboard</div>
+                    <div class="card-header">Your course registrations</div>
 
                     <div class="card-body">
-                        <table>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>User</th>
@@ -21,7 +21,29 @@
                             <tbody>
                                 @foreach ($registrations as $registration)
                                     <tr>
-                                        <td></td>
+                                        <td>
+                                            <strong>{{ $registration->user->name }}</strong>
+                                        </td>
+                                        <td>
+                                            <strong>{{ $registration->course->name }}</strong>
+                                        </td>
+                                        <td>
+                                            @if ($registration->status == 'pending')
+                                                <p><span class="btn btn-warning">Pending</span></p>
+                                            @endif
+                                            @if ($registration->status == 'approved')
+                                                <p><span class="btn btn-success">Approved</span></p>
+                                            @endif
+                                            @if ($registration->status == 'denied')
+                                                <p><span class="btn btn-danger">Denied</span></p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $registration->created_at->format('Y-m-d') }}
+                                        </td>
+                                        <td>
+                                            {{ $registration->created_at->format('Y-m-d h:i:s') }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
