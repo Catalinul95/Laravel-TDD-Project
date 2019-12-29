@@ -102,7 +102,7 @@ class CourseRegistrationsTest extends TestCase
     /** @test */
     public function a_user_can_delete_a_course_registration_request()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
         $course = factory(Course::class)->create(['user_id' => $user->id]);
@@ -112,5 +112,18 @@ class CourseRegistrationsTest extends TestCase
 
         $response->assertStatus(302);
         $this->assertDatabaseMissing('course_registrations', ['id' => $courseRegistration->id]);
+    }
+
+
+    /** @test */
+    public function a_user_can_delete_a_valid_course_registration()
+    {
+        //$this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->delete('/courses/registrations/delete/3344');
+
+        $response->assertStatus(404);
     }
 }
