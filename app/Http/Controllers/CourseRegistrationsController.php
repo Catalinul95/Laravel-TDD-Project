@@ -75,4 +75,17 @@ class CourseRegistrationsController extends Controller
 
         return back();
     }
+
+    public function delete($courseRegistrationId)
+    {
+        $courseRegistration = CourseRegistration::findOrFail($courseRegistrationId);
+
+        if ($courseRegistration->course->user->id != auth()->user()->id) {
+            return redirect('/');
+        }
+
+        $courseRegistration->delete();
+
+        return back();
+    }
 }

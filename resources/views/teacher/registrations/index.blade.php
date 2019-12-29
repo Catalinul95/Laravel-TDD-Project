@@ -56,6 +56,12 @@
                                                 <input type="hidden" name="status" value="denied">
                                                 <button class="btn btn-danger">Deny</button>
                                             </form>
+                                            @else
+                                                <form action="{{ route('course-registrations.delete', ['courseRegistrationId' => $registration->id]) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE')   }}
+                                                <button class="btn btn-danger">Delete</button>
+                                            </form>
                                             @endif
                                         </td>
                                     </tr>
