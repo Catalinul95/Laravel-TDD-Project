@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Your course registrations</div>
 
@@ -47,8 +47,20 @@
                                             {{ $registration->created_at->format('Y-m-d h:i:s') }}
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-success">Accept</a>
-                                            <a href="#" class="btn btn-danger">Deny</a>
+                                            @if ($registration->status == 'pending')
+                                            <form action="{{ route('course-registrations.update', ['courseRegistrationId' => $registration->id]) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('PATCH')   }}
+                                                <input type="hidden" name="status" value="approved">
+                                                <button class="btn btn-success">Approve</button>
+                                            </form>
+                                            <form action="{{ route('course-registrations.update', ['courseRegistrationId' => $registration->id]) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('PATCH')   }}
+                                                <input type="hidden" name="status" value="denied">
+                                                <button class="btn btn-danger">Deny</button>
+                                            </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

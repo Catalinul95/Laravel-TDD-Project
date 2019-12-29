@@ -67,8 +67,11 @@ class CourseRegistrationsController extends Controller
             return redirect('/');
         }
 
-        $courseRegistration->status = $request->status;
-        $courseRegistration->save();
+        if ($request->has('status') && in_array($request->status, ['approved', 'denied'])) {
+            $courseRegistration->update(['status' => $request->status]);
+        } else {
+            abort(400);
+        }
 
         return back();
     }
