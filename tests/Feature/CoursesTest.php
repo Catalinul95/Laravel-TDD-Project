@@ -67,7 +67,7 @@ class CoursesTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect('/courses/create');
 
-        $this->assertEquals($course['name'], (Course::first())->name);
+        $this->assertDatabaseHas('courses' , ['name' => Course::where('name', $course['name'])->first()->name]);
     }
 
     /** @test */
