@@ -23,7 +23,7 @@ class CourseRegistrationsController extends Controller
 
         $registrations = $course->registrations;
 
-        return view('teacher.registrations.index', compact('registrations'));
+        return view('teacher.registrations.index', compact('registrations', 'course'));
     }
 
     public function store(Request $request, $courseId)

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Your course registrations</div>
+                    <div class="card-header">Your registrations for course <strong>{{ $course->name }}</strong></div>
 
                     <div class="card-body">
                         @if ($registrations->count())
@@ -13,7 +13,6 @@
                             <thead>
                                 <tr>
                                     <th>User</th>
-                                    <th>Course</th>
                                     <th>Status</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
@@ -25,9 +24,6 @@
                                     <tr>
                                         <td>
                                             <strong>{{ $registration->user->name }}</strong>
-                                        </td>
-                                        <td>
-                                            <strong>{{ $registration->course->name }}</strong>
                                         </td>
                                         <td>
                                             @if ($registration->status == 'pending')
