@@ -65,3 +65,16 @@ $factory->define(\App\CourseRegistration::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(\App\CourseClass::class, function (Faker $faker) {
+    return [
+        'course_id' => function () {
+            return (factory(\App\Course::class)->create())->id;
+        },
+        'title' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'scheduled_date' => $faker->dateTimeBetween('+0 days', '+1 week'),
+        'start_time' => $faker->time('H:i:s'),
+        'end_time' => $faker->time('H:i:s'),
+    ];
+});
+

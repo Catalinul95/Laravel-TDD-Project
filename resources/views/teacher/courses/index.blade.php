@@ -14,7 +14,8 @@
                                  <div class="col-md-12">
                                       <div class="text-right">
                                         <a href="#" class="btn btn-sm btn-secondary">Update</a>
-                                        <a href="{{ route('course-registrations.index', ['course' => $course->id])  }}" class="btn btn-sm btn-info">Registrations</a>
+                                        <a href="{{ route('course-registrations.index', ['course' => $course->id])  }}" class="btn btn-sm btn-primary">Registrations</a>
+                                        <a href="{{ route('courses-classes.index', ['course' => $course->id]) }}" class="btn btn-sm btn-primary">Classes</a>
                                       </div>
                                      <h2><a href="{{ route('courses.show', ['course' => $course->slug]) }}">{{ $course->name }}</a></h2>
                                      <p>{{ $course->short_description }}</p>

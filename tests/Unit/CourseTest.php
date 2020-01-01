@@ -48,4 +48,12 @@ class CourseTest extends TestCase
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $course->registrations);
     }
+
+    /** @test */
+    public function a_course_has_many_classes()
+    {
+        $course = factory(Course::class)->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $course->classes);
+    }
 }
