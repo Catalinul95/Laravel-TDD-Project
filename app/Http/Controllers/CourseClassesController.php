@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\CourseClass;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCourseClassRequest;
 
 class CourseClassesController extends Controller
 {
@@ -23,5 +25,24 @@ class CourseClassesController extends Controller
     	$classes = $course->classes;
 
     	return view('teacher.classes.index', compact('course', 'classes'));
+    }
+
+    public function create($courseId)
+    {
+    	return view('teacher.classes.create', compact('courseId'));
+    }
+
+    public function store(StoreCourseClassRequest $request, $courseId)
+    {
+    	$course = Course::findOrFail($courseId);
+
+    	Courseclass::create([
+    		'course_id' => $course->id,
+    		'title' => $request->title,
+    		'description' => $request->description,
+    		'start_time' => $request->start_time,
+    		'end_time' => $request->end_time,
+    		'scheduled_date' => $request->scheduled_date,
+    	]);
     }
 }

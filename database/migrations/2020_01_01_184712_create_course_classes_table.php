@@ -17,10 +17,10 @@ class CreateCourseClassesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('course_id');
             $table->string('title');
-            $table->text('description');
-            $table->timestamp('scheduled_date');
-            $table->time('start_time');
-            $table->time('end_time');   
+            $table->text('description')->nullabe();
+            $table->timestamp('scheduled_date')->nullabe();
+            $table->time('start_time')->nullabe();
+            $table->time('end_time')->nullabe();
             $table->timestamps();
         });
     }

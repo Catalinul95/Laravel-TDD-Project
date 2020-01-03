@@ -76,4 +76,71 @@ class CourseClassesTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    /** @test */
+    public function user_can_view_the_course_class_create_page()
+    {
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+        
+        $response = $this->actingAs($user)->get('/courses/classes/create/' . $course->id);
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function user_can_create_a_class_to_a_course()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->make(['course_id' => $course->id])->toArray();
+
+        $response = $this->actingAs($user)->post('/courses/classes/' . $course->id, $class);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('course_classes', [
+            'course_id' => $class['course_id'],
+            'description' => $class['description'],
+        ]);
+    }
+
+    /** @test */
+    public function only_an_autenticated_user_can_create_a_class_to_a_course()
+    {
+        $response = $this->post('/courses/classes/23');
+
+        $response->assertStatus(302);
+    }
+
+    /** @test */
+    public function user_can_create_a_class_to_a_valid_course()
+    {
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->make(['course_id' => $course->id])->toArray();
+
+        $response = $this->actingAs($user)->post('/courses/classes/2323');
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function a_title_is_required()
+    {
+        //$this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->make(['course_id' => $course->id])->toArray();
+        unset($class['title']);
+
+        $response = $this->actingAs($user)->post('/courses/classes/' . $course->id, $class);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('title');
+    }
 }

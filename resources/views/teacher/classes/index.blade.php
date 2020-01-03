@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <p class="text-right"><a href="{{ route('courses-classes.create', ['course' => $course->id]) }}" class="btn btn-success">Create Class</a></p>
                 <div class="card">
                     <div class="card-header">Your classes for course <strong>{{ $course->name }}</strong></div>
 
@@ -18,6 +19,7 @@
                                     <th>End Time</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +42,9 @@
                                         </td>
                                         <td>
                                             {{ $class->updated_at->format('Y-m-d h:i:s') }}
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-success">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
