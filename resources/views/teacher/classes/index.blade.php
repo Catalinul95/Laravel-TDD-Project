@@ -13,7 +13,7 @@
                             <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Course Name</th>
+                                    <th>Class Title</th>
                                     <th>Scheduled Date</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
@@ -44,7 +44,7 @@
                                             {{ $class->updated_at->format('Y-m-d h:i:s') }}
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-success">View</a>
+                                            <a href="{{ route('courses-classes.show', ['course' => $class->course->id, 'class' => $class->id]) }}" class="btn btn-success">View</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -143,4 +143,43 @@ class CourseClassesTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors('title');
     }
+
+    /** @test */
+    public function an_user_can_view_the_course_class_page_for_editing()
+    {
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->create(['course_id' => $course->id]);  
+
+        $response = $this->actingAs($user)->get('/courses/' . $course->id . '/classes/' . $class->id);
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function an_user_can_view_the_valid_course_class_page_for_editing()
+    {
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->create(['course_id' => $course->id]);  
+
+        $response = $this->actingAs($user)->get('/courses/23/classes/' . $class->id);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function an_user_can_view_the_course_valid_class_page_for_editing()
+    {
+        $user = factory(User::class)->create();
+        $course = factory(Course::class)->create();
+
+        $class = factory(CourseClass::class)->create(['course_id' => $course->id]);  
+
+        $response = $this->actingAs($user)->get('/courses/' . $course->id . '/classes/23');
+
+        $response->assertStatus(404);
+    }
 }

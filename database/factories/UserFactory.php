@@ -78,3 +78,14 @@ $factory->define(\App\CourseClass::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(\App\CourseClassUser::class, function (Faker $faker) {
+    return [
+        'class_id' => function () {
+            return (factory(CourseClass::class)->create())->id;
+        },
+        'user_id' => function () {
+            return (factory(\App\User::class)->create())->id;
+        },
+    ];
+});
+
