@@ -33,4 +33,11 @@ class Course extends Model
     {
         return $this->hasMany(CourseClass::class, 'course_id', 'id');
     }
+
+    public function unoccupiedRegistrations($classId)
+    {
+        $students = CourseClassUser::where('class_id', $classId)->get()->pluck('user_id')->toArray();
+
+        return $this->registrations()->where('status', 'approved')->whereNotIn('user_id', $students)->get();
+    }
 }

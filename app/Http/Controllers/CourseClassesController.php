@@ -44,13 +44,15 @@ class CourseClassesController extends Controller
     		'end_time' => $request->end_time,
     		'scheduled_date' => $request->scheduled_date,
     	]);
+
+    	return back();
     }
 
     public function show($courseId, $classId)
     {
     	$course = Course::findOrFail($courseId);
     	$class = $course->classes()->where('id', $classId)->firstOrFail();
-    	$registrations = $course->registrations;
+    	$registrations = $course->unoccupiedRegistrations($class->id);
 
     	return view('teacher.classes.show', compact('course', 'class', 'registrations'));
     }

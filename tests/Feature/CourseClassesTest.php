@@ -99,7 +99,7 @@ class CourseClassesTest extends TestCase
 
         $response = $this->actingAs($user)->post('/courses/classes/' . $course->id, $class);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('course_classes', [
             'course_id' => $class['course_id'],
             'description' => $class['description'],

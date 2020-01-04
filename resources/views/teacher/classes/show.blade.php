@@ -26,15 +26,7 @@
                                 <option selected>Add a user to this class</option>
                                 @php $found = false @endphp
                                 @foreach ($registrations as $registration)
-                                    @foreach ($class->users as $userClass)
-                                        @if($userClass->user->name == $registration->user->name)
-                                            @php $found = true @endphp
-                                        @endif
-                                    @endforeach
-                                    @if (!$found)
-                                        <option value="{{ $registration->user->id }}">{{ $registration->user->name }}</option>
-                                    @endif
-                                    @php $found = false @endphp
+                                    <option value="{{ $registration->user->id }}">{{ $registration->user->name }}</option>
                                 @endforeach
                             </select>
                             <button class="btn btn-success">Save</button>
